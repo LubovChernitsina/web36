@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Отзывы | ЛЮБОВЬ ЧЕРНИЦИНА</title>
+
+  <style>
+    @font-face {
+      font-family: 'Montserrat';
+      src: url('fonts/Montserrat-Regular.ttf') format('truetype');
+      font-weight: 400;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Montserrat';
+      src: url('fonts/Montserrat-Bold.ttf') format('truetype');
+      font-weight: 700;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Playfair Display';
+      src: url('fonts/PlayfairDisplay-Regular.ttf') format('truetype');
+      font-weight: 400;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Playfair Display';
+      src: url('fonts/PlayfairDisplay-Bold.ttf') format('truetype');
+      font-weight: 700;
+      font-style: normal;
+    }
+
+    :root {
+      --primary-color: #222;
+      --accent-color: #d4c9c0;
+      --bg-color: #f9f9f9;
+      --text-color: #444;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      margin: 0;
+      padding: 0;
+      color: var(--text-color);
+      background-color: var(--bg-color);
+    }
+
+    .site-header {
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding: 10px 0;
+    }
+
+    .header-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+      text-decoration: none;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .main-nav .nav-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      gap: 30px;
+    }
+
+    .main-nav .nav-list li {
+      position: relative;
+    }
+
+    .main-nav .nav-list li a,
+    .main-nav .nav-list .dropbtn {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      font-size: 16px;
+      transition: color 0.3s;
+      display: inline-block;
+    }
+
+    .main-nav .nav-list li a:hover,
+    .main-nav .nav-list .dropbtn:hover {
+      color: #000;
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      background: #fdfdfd;
+      min-width: 220px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      overflow: hidden;
+      z-index: 9999;
+      visibility: hidden;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+    }
+
+    .dropdown:hover .dropdown-menu,
+    .dropdown.active .dropdown-menu {
+      visibility: visible;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .dropdown-menu li a {
+      display: block;
+      width: 100%;
+      padding: 12px 16px;
+      color: #333;
+      text-decoration: none;
+      font-size: 14px;
+      font-family: 'Montserrat', sans-serif;
+      text-align: left;
+      transition: padding-left 0.3s ease;
+    }
+
+    .dropdown-menu li a:hover {
+      background-color: #f8f8f8;
+      padding-left: 20px;
+    }
+
+    .hamburger {
+      display: none;
+      cursor: pointer;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .hamburger span {
+      width: 25px;
+      height: 3px;
+      background-color: #333;
+      border-radius: 2px;
+    }
+
+    .page-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      text-align: center;
+      color: var(--primary-color);
+      margin: 60px 0 40px 0;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
+      margin-bottom: 60px;
+    }
+
+    .review-card {
+      background: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      transition: transform 0.3s ease;
+    }
+
+    .review-card:hover {
+      transform: translateY(-5px);
+    }
+
+    footer {
+      padding: 40px 0;
+      text-align: center;
+      border-top: 1px solid #eee;
+    }
+
+    .footer-info p {
+      margin: 5px 0;
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 1024px) {
+      .header-container {
+        flex-direction: column;
+        gap: 15px;
+      }
+      .main-nav .nav-list {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+        margin-top: 20px;
+      }
+      .main-nav.active .nav-list {
+        display: flex;
+      }
+      .hamburger {
+        display: flex;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-container">
+      <a href="../index.html" class="logo">ЛЮБОВЬ ЧЕРНИЦИНА</a>
+
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <nav class="main-nav">
+        <ul class="nav-list">
+          <li><a href="../index.html#about">Обо мне</a></li>
+
+          <li class="dropdown">
+            <a href="#" class="dropbtn">Портфолио ▾</a>
+            <ul class="dropdown-menu">
+              <li><a href="../portfolio/wedding.html">Свадебные фотоистории</a></li>
+              <li><a href="../portfolio/newyear.html">Новогодние фотоистории</a></li>
+              <li><a href="../portfolio/family.html">Семейные фотоистории</a></li>
+              <li><a href="../portfolio/pregnancy.html">Беременность</a></li>
+              <li><a href="../portfolio/kids.html">Детская фотосъёмка</a></li>
+              <li><a href="../portfolio/girls.html">Фотосессии для девушек</a></li>
+              <li><a href="../portfolio/fashion.html">Fashion съёмки</a></li>
+              <li><a href="../portfolio/love-story.html">Love Story</a></li>
+            </ul>
+          </li>
+
+          <li><a href="../reviews/reviews.html">Отзывы</a></li>
+          <li><a href="../services.html">Цены</a></li>
+          <li><a href="../contacts.html">Контакты</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="clients-reviews-section">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+      <h2 class="page-title">ОТЗЫВЫ КЛИЕНТОВ</h2>
+
+      <div class="reviews-grid">
+        <!-- Отзыв 1 -->
+        <article class="review-card">
+          <div style="display: flex; align-items: start; gap: 16px; margin-bottom: 12px;">
+            <div style="flex: 0 0 50px; height: 50px;">
+              <img src="10.jpg" alt="Анна Петрова" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+            </div>
+            <div>
+              <h3 style="margin: 0 0 4px 0; font-family: 'Playfair Display', serif; font-size: 1.125rem; color: #222;">Анна Петрова</h3>
+              <p style="margin: 0; font-family: 'Montserrat', sans-serif; font-size: 0.875rem; color: #888;">Свадьба, 15.06.2023</p>
+            </div>
+          </div>
+          <div style="display: flex; gap: 4px; margin-bottom: 16px;">
+            <span style="color: #ffc107; font-size: 16px;">★</span>
+            <span style="color: #ffc107; font-size: 16px;">★</span>
+            <span style="color: #ffc107; font-size: 16px;">★</span>
+            <span style="color: #ffc107; font-size: 16px;">★</span>
+            <span style="color: #ffc107; font-size: 16px;">★</span>
+          </div>
+          <p style="margin: 0; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; line-height: 1.5; color: #333;">
+            «Любовь — настоящий профессионал! Сняла нашу свадьбу так, что мы будто заново прожили этот день. Фотографии получились живыми, эмоциональными и очень красивыми. Спасибо за эти воспоминания!»
+          </p>
+        </article>
+
+        <!-- Отзыв 2 -->
+        <article class="review-card">
+          <div style="display: flex; align-items: start; gap: 16px; margin-bottom: 12px;">
+            <div style="flex: 0 0 50px; height: 50px;">
+              <img src="maria-photo.jpg" alt="Мария Соколова" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+            </div>
+            <div>
+              <h3 style="margin: 0 0 4px 0; font-family: 'Playfair Display', serif; font-size: 1.125rem; color: #222;">Мария Соколова</h3>
+              <p style="margin: 0; font-family: 'Montserrat', sans-serif; font-size: 0.875rem; color: #888;">Семейная фотосессия, 10.03.2023</p>
+            </div>
+          </div>
+          <div style="display: flex; gap: 4px; margin-bottom: 16px;">
+            <span style="color: #ffc107; font-size: 16px;">★</span>
+            <span style="color: #ffc107; font-size: 16px;">★</span>
+            <span style="color: #ffc107; font-size: 16px;">★</span>
+            <span style="color: #ffc107; font-size: 16px;">★</span>
+            <span style="color: #ffc107; font-size: 16px;">★</span>
+          </div>
+          <p style="margin: 0; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; line-height: 1.5; color: #333;">
+            «Хотели уютные семейные фото, и Любовь помогла нам расслабиться и почувствовать себя естественно. Результат превзошёл ожидания — теперь эти фото — наша любимая семейная реликвия!»
+          </p>
+        </article>
+
+        <!-- Отзыв 3 -->
+        <article class="review-card">
+          <div style="display: flex; align-items: start; gap: 16px; margin-bottom: 12px;">
+            <div style="flex: 0 0 50px; height: 50px;">
+              <img src="dmitry-photo.jpg" alt="Дмитрий Волков" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+            </div>
+            <div>
+              <h3 style="margin: 0 0 4px 0; font-family: 'Playfair Display', serif; font-size: 1.125rem; color: #222;">Дмитрий Волков</h3>
+              <p style="margin: 0; font-family: 'Montserrat', sans-serif; font-size: 0.875rem; color: #888;">Корпоратив, 20.11.2023</p>
+            </div>
+          </div>
+          <div style="display: flex; gap: 4px; margin-bottom: 16px;">
+            <span style="color: #ffc107; font-size: 16px;">★</span>
+            <span style="color: #ffc107; font-size: 16px;">★</span>
+            <span style="color: #ffc107; font-size: 16px;">★</span>
+            <span style="color: #ffc107; font-size: 16px;">★</span>
+            <span style="color: #ffc107; font-size: 16px;">★</span>
+          </div>
+          <p style="margin: 0; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; line-height: 1.5; color: #333;">
+            «Заказывали съёмку корпоративного мероприятия. Любовь отлично вписалась в атмосферу, не мешала гостям, но при этом поймала все важные моменты. Фотографии передали настроение вечера на 100%!»
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-info">
+      <p>Семейный фотограф Любовь Черницина</p>
+      <p>Челябинск</p>
+    </div>
+  </footer>
+
+  <script>
+    const hamburger = document.querySelector('.hamburger');
+    const nav = document.querySelector('.main-nav');
+    const dropdowns = document.querySelectorAll('.dropdown');
+
+    hamburger.addEventListener('click', () => {
+      nav.classList.toggle('active');
+    });
+
+    document.querySelectorAll('.nav-list a').forEach(link => {
+      link.addEventListener('click', () => {
+        nav.classList.remove('active');
+      });
+    });
+
+    dropdowns.forEach(dropdown => {
+      const btn = dropdown.querySelector('.dropbtn');
+
+      btn.addEventListener('click', (e) => {
+        if (window.innerWidth <= 1024) {
+          e.preventDefault();
+          dropdown.classList.toggle('active');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

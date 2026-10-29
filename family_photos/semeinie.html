@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Любовь Черницина — Фотограф</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Arial, sans-serif; background-color: #f4f4f4; color: #333; line-height: 1.6; }
+    a { text-decoration: none; color: inherit; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+    .site-header {
+      background: #fff;
+      padding: 15px 0;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .header-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 2rem;
+      color: #222;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      white-space: nowrap;
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .nav-menu li { position: relative; }
+    .nav-menu a {
+      font-weight: 500;
+      color: #555;
+      padding: 8px 0;
+      transition: color 0.3s ease;
+    }
+    .nav-menu a:hover { color: #000; }
+
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-12px);
+      min-width: 240px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+      padding: 10px 0;
+      visibility: hidden;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1), transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.25s linear;
+      z-index: 999;
+      margin-top: 8px;
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .dropdown.active .dropdown-menu {
+      visibility: visible;
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+      pointer-events: all;
+    }
+
+    .dropdown-menu a {
+      display: block;
+      padding: 14px 20px;
+      color: #555;
+      font-weight: normal;
+    }
+    .dropdown-menu a:hover { color: #000; background-color: #fafafa; }
+
+    .hamburger {
+      display: none;
+      cursor: pointer;
+      flex-direction: column;
+      gap: 5px;
+      width: 30px;
+      align-items: center;
+      padding: 5px;
+    }
+    .hamburger span {
+      width: 25px;
+      height: 3px;
+      background-color: #333;
+      border-radius: 2px;
+    }
+
+    @media (max-width: 768px) {
+      .header-container {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+      }
+      .logo { text-align: center; }
+      .hamburger { display: flex; justify-content: center; margin: 0 auto; }
+      .nav-menu {
+        display: none;
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 15px;
+        width: 100%;
+      }
+      .nav-menu.active { display: flex; }
+      .nav-menu li { width: 100%; text-align: center; }
+
+      .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-12px);
+        box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+        border: 1px solid rgba(0,0,0,0.06);
+        padding: 10px 0;
+        margin: 0;
+        visibility: hidden;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1), transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.25s linear;
+      }
+      .dropdown.active .dropdown-menu {
+        visibility: visible;
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+        pointer-events: all;
+      }
+      .dropdown-menu a {
+        padding: 14px 20px;
+        border-bottom: 1px solid #eee;
+      }
+      .dropdown-menu a:last-child { border: none; }
+    }
+
+    .family-portfolio-section {
+      padding: 60px 0;
+      background-color: #f9f9f9;
+    }
+    .section-title {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      color: #222;
+    }
+    .section-desc {
+      text-align: center;
+      font-size: 1.1rem;
+      color: #666;
+      max-width: 600px;
+      margin: 0 auto 40px;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+    .photo-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      background: #fff;
+    }
+    .photo-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+    .photo-card:hover img { transform: scale(1.05); }
+    .card-caption {
+      padding: 14px;
+      text-align: center;
+      font-weight: 600;
+      color: #333;
+      background: #fff;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-container">
+      <div class="logo">ЛЮБОВЬ ЧЕРНИЦИНА</div>
+
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="../index.html">Обо мне</a></li>
+
+          <li class="dropdown">
+            <a href="#" class="dropbtn">Портфолио ▾</a>
+            <ul class="dropdown-menu">
+              <li><a href="../portfolio/wedding.html">Свадебные фотоистории</a></li>
+              <li><a href="../portfolio/newyear.html">Новогодние фотоистории</a></li>
+              <li><a href="../portfolio/family.html">Семейные фотоистории</a></li>
+              <li><a href="../portfolio/pregnancy.html">Беременность</a></li>
+              <li><a href="../portfolio/kids.html">Детская фотосъёмка</a></li>
+              <li><a href="../portfolio/girls.html">Фотосессии для девушек</a></li>
+              <li><a href="../portfolio/fashion.html">Fashion съёмки</a></li>
+              <li><a href="../portfolio/love-story.html">Love Story</a></li>
+            </ul>
+          </li>
+
+          <li><a href="prices.html">Цены</a></li>
+          <li><a href="reviews.html">Отзывы</a></li>
+          <li><a href="contacts.html">Контакты</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="family-portfolio-section">
+    <div class="container">
+      <h2 class="section-title">Семейные фотосессии</h2>
+      <p class="section-desc">Тёплые моменты, которые хочется пересматривать снова и снова.</p>
+      <div class="gallery-grid">
+        <div class="photo-card">
+          <img src="1.jpg" alt="Семейная фотосессия в парке">
+          <div class="card-caption">Семья в парке</div>
+        </div>
+        <div class="photo-card">
+          <img src="1.jpg" alt="Семейный ужин дома">
+          <div class="card-caption">Домашний уют</div>
+        </div>
+        <div class="photo-card">
+          <img src="1.jpg" alt="Семья на море">
+          <div class="card-caption">Отдых у моря</div>
+        </div>
+        <div class="photo-card">
+          <img src="1.jpg" alt="Детская семейная фотосессия">
+          <div class="card-caption">Детские эмоции</div>
+        </div>
+        <div class="photo-card">
+          <img src="1.jpg" alt="Семейная прогулка в лесу">
+          <div class="card-caption">Прогулка в лесу</div>
+        </div>
+        <div class="photo-card">
+          <img src="1.jpg" alt="Семейные портреты в студии">
+          <div class="card-caption">Студийные портреты</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container footer-container">
+      <div class="footer-col footer-contacts">
+        <h4>Свяжитесь со мной</h4>
+        <p>📞 +7 (951) 467-50-54</p>
+        <p>✉️ lubovchrn@yandex.ru</p>
+        <p>📍 Челябинск, Россия</p>
+      </div>
+      <div class="footer-col footer-links">
+        <h4>Навигация</h4>
+        <a href="../index.html">Главная</a>
+        <a href="../index.html">Портфолио</a>
+        <a href="prices.html">Цены</a>
+        <a href="contacts.html">Контакты</a>
+      </div>
+      <div class="footer-col footer-links">
+        <h4>Соцсети</h4>
+        <a href="#">Telegram</a>
+        <a href="https://vk.ru/lubovchenitsina" target="_blank">VK</a>
+        <a href="https://max.ru/u/f9LHodD0cOLcdufGHzQvLa3LYXsSVfKSWtmJEAGg4q6YG2xk5pyuvTVyfpM" target="_blank">Написать в MAX</a>
+        <a href="#">Instagram</a>
+      </div>
+    </div>
+    <div class="container copyright">
+      &copy; 2026 Любовь Черницина. Все права защищены.
+    </div>
+  </footer>
+
+  <script>
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.querySelector('.nav-menu');
+    const dropdowns = document.querySelectorAll('.dropdown');
+
+    // Бургер-меню
+    hamburger.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+    });
+
+    // Закрытие главного меню при клике на любую ссылку
+    document.querySelectorAll('.nav-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('active');
+        dropdowns.forEach(d => d.classList.remove('active'));
+      });
+    });
+
+    // Открытие подменю по клику на кнопку
+    dropdowns.forEach(dropdown => {
+      const btn = dropdown.querySelector('.dropbtn');
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        dropdown.classList.toggle('active');
+      });
+    });
+
+    // Закрытие подменю при клике на ссылку внутри него
+    document.querySelectorAll('.dropdown-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        dropdowns.forEach(d => d.classList.remove('active'));
+      });
+    });
+
+    // Закрытие меню при клике вне его
+    document.addEventListener('click', (e) => {
+      if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
+        navMenu.classList.remove('active');
+        dropdowns.forEach(d => d.classList.remove('active'));
+      }
+    });
+  </script>
+</body>
+</html>
